@@ -1,0 +1,136 @@
+const mongoose = require('mongoose');
+const crypto = require('crypto');
+
+const cardSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 200
+  },
+  content: {
+    type: String,
+    required: true,
+    maxlength: 10000
+  },
+  contentHash: {
+    type: String,
+    required: false, // Make it optional initially to avoid migration issues
+    unique: false // Make it non-unique initially
+  },
+  type: {
+    type: String,
+    enum: ['concept', 'action', 'quote', 'checklist', 'mindmap'],
+    default: 'concept'
+  },
+  category: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  tags: [{
+    type: String,
+    trim: true
+  }],
+  source: {
+    type: String,
+    trim: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  metadata: {
+    difficulty: {
+      type: Number,
+      min: 1,
+      max: 5,
+      default: 3
+    },
+    estimatedTime: {
+      type: Number, // in minutes
+      default: 5
+    },
+    relatedCards: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Card'
+    }],
+    lastReviewed: {
+      type: Date
+    },
+    reviewCount: {
+      type: Number,
+      default: 0
+    },
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5
+    }
+  },
+  isPublic: {
+    type: Boolean,
+    default: false
+  },
+  attachments: [{
+    filename: String,
+    originalName: String,
+    mimetype: String,
+    size: Number,
+    path: String
+  }]
+}, {
+  timestamps: true
+});
+
+// Indexes for better search performance
+cardSchema.index({ title: 'text', content: 'text', tags: 'text' });
+cardSchema.index({ user: 1, category: 1 });
+cardSchema.index({ type: 1, category: 1 });
+cardSchema.index({ contentHash: 1, user: 1 }); // Index for duplicate detection
+
+// Virtual for formatted content
+cardSchema.virtual('formattedContent').get(function() {
+  return this.content.replace(/\n/g, '<br>');
+});
+
+// Method to generate content hash
+cardSchema.methods.generateContentHash = function() {
+  const contentToHash = `${this.title.toLowerCase().trim()}-${this.content.toLowerCase().trim()}`;
+  return crypto.createHash('sha256').update(contentToHash).digest('hex');
+};
+
+// Method to add related card
+cardSchema.methods.addRelatedCard = function(cardId) {
+  if (!this.metadata.relatedCards.includes(cardId)) {
+    this.metadata.relatedCards.push(cardId);
+    return this.save();
+  }
+  return Promise.resolve(this);
+};
+
+// Method to update review data
+cardSchema.methods.updateReview = function() {
+  this.metadata.lastReviewed = new Date();
+  this.metadata.reviewCount += 1;
+  return this.save();
+};
+
+// Static method to find cards by category
+cardSchema.statics.findByCategory = function(category, userId) {
+  return this.find({ category, user: userId }).sort({ createdAt: -1 });
+};
+
+// Static method to find cards by type
+cardSchema.statics.findByType = function(type, userId) {
+  return this.find({ type, user: userId }).sort({ createdAt: -1 });
+};
+
+// Static method to find duplicate cards
+cardSchema.statics.findDuplicate = function(contentHash, userId) {
+  if (!contentHash) return null;
+  return this.findOne({ contentHash, user: userId });
+};
+
+module.exports = mongoose.model('Card', cardSchema);

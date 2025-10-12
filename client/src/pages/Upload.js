@@ -1,0 +1,182 @@
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addMultipleCards } from '../store/slices/cardSlice';
+import UploadZone from '../components/UploadZone';
+
+const Upload = () => {
+  const dispatch = useDispatch();
+  const [uploadSettings, setUploadSettings] = useState({
+    category: '',
+    tags: ''
+  });
+  const [uploadResults, setUploadResults] = useState(null);
+
+  const handleUploadComplete = (result) => {
+    console.log('Upload completed:', result);
+    
+    // Store upload results for display
+    setUploadResults(result);
+    
+    // Add the newly created cards to the Redux store
+    if (result.cards && Array.isArray(result.cards)) {
+      // Use addMultipleCards for better efficiency
+      dispatch(addMultipleCards(result.cards));
+    }
+  };
+
+  const handleSettingChange = (e) => {
+    const { name, value } = e.target;
+    setUploadSettings(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Upload Content
+        </h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Upload files to automatically generate learning cards
+        </p>
+      </div>
+
+      {/* Upload Settings */}
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+          Upload Settings
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Default Category (Optional)
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={uploadSettings.category}
+              onChange={handleSettingChange}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+            >
+              <option value="">Auto-detect from content</option>
+              <option value="AI">AI</option>
+              <option value="Architecture">Architecture</option>
+              <option value="Change Management">Change Management</option>
+              <option value="Communication">Communication</option>
+              <option value="Conflict Resolution">Conflict Resolution</option>
+              <option value="Customer Service">Customer Service</option>
+              <option value="Data">Data</option>
+              <option value="Decision Making">Decision Making</option>
+              <option value="Financial Management">Financial Management</option>
+              <option value="Human Resources">Human Resources</option>
+              <option value="Leadership">Leadership</option>
+              <option value="Management">Management</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Operating Principles">Operating Principles</option>
+              <option value="Operations">Operations</option>
+              <option value="Organization">Organization</option>
+              <option value="People">People</option>
+              <option value="Performance Management">Performance Management</option>
+              <option value="Process">Process</option>
+              <option value="Sales">Sales</option>
+              <option value="Strategic Planning">Strategic Planning</option>
+              <option value="Team Management">Team Management</option>
+              <option value="Technology">Technology</option>
+              <option value="Time Management">Time Management</option>
+              <option value="General">General</option>
+            </select>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Leave empty to auto-detect category from content
+            </p>
+          </div>
+          <div>
+            <label htmlFor="tags" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Default Tags (Optional)
+            </label>
+            <input
+              type="text"
+              id="tags"
+              name="tags"
+              value={uploadSettings.tags}
+              onChange={handleSettingChange}
+              placeholder="tag1, tag2, tag3"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+            />
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Comma-separated tags to add to all cards
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Upload Results */}
+      {uploadResults && (
+        <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg border border-green-200 dark:border-green-800">
+          <h3 className="text-lg font-medium text-green-900 dark:text-green-100 mb-4">
+            Upload Results
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                {uploadResults.details?.created || 0}
+              </div>
+              <div className="text-sm text-green-700 dark:text-green-300">
+                New Cards Created
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                {uploadResults.details?.updated || 0}
+              </div>
+              <div className="text-sm text-blue-700 dark:text-blue-300">
+                Existing Cards Updated
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-600 dark:text-gray-400">
+                {(uploadResults.details?.created || 0) + (uploadResults.details?.updated || 0)}
+              </div>
+              <div className="text-sm text-gray-700 dark:text-gray-300">
+                Total Cards Processed
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 text-sm text-green-800 dark:text-green-200">
+            <strong>File:</strong> {uploadResults.file?.originalName}
+            <br />
+            <strong>Message:</strong> {uploadResults.message}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <UploadZone 
+          onUploadComplete={handleUploadComplete}
+          uploadSettings={uploadSettings}
+        />
+      </div>
+
+      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border border-blue-200 dark:border-blue-800">
+        <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-2">
+          Supported File Types
+        </h3>
+        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+          <li>• PDF documents (.pdf)</li>
+          <li>• Word documents (.docx, .doc)</li>
+          <li>• Excel spreadsheets (.xlsx, .xls)</li>
+          <li>• Text files (.txt)</li>
+          <li>• Markdown files (.md)</li>
+          <li>• JSON files (.json)</li>
+          <li>• Images (.jpg, .jpeg, .png)</li>
+        </ul>
+        <p className="mt-3 text-xs text-blue-700 dark:text-blue-300">
+          Maximum file size: 10MB per file
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Upload;
