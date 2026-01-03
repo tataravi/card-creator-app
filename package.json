@@ -21,7 +21,7 @@
     "test:frontend": "curl -I http://localhost:3000",
     "test:proxy": "curl http://localhost:3000/api/health"
   },
-  "keywords": ["react", "nodejs", "cards", "content", "leadership", "mindnode"],
+  "keywords": ["react", "nodejs", "cards", "content", "leadership"],
   "author": "",
   "license": "MIT",
   "devDependencies": {

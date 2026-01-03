@@ -3,7 +3,7 @@
 /**
  * MCP Server for Evernote Integration
  * This is an example of how to create an MCP server that connects to Evernote
- * and can be used with your MindNode app
+ * and can be used with your  app
  */
 
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
@@ -94,7 +94,7 @@ class EvernoteMCPServer {
           },
           {
             name: 'import_evernote_note_as_card',
-            description: 'Import an Evernote note and convert it to a MindNode card',
+            description: 'Import an Evernote note and convert it to a  card',
             inputSchema: {
               type: 'object',
               properties: {

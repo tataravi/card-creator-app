@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# MindNode Card Creation App - Automated Setup Script
+# CardCreator Card Creation App - Automated Setup Script
 # This script sets up the complete environment for reproducible deployment
 
-echo "🚀 Setting up MindNode Card Creation App..."
+echo "🚀 Setting up CardCreator Card Creation App..."
 
 # Colors for output
 RED='\033[0;31m'
@@ -187,7 +187,7 @@ test_setup() {
 
 # Main setup function
 main() {
-    echo "🎯 MindNode Card Creation App Setup"
+    echo "🎯 CardCreator Card Creation App Setup"
     echo "=================================="
     
     check_node
@@ -205,7 +205,7 @@ main() {
     echo "1. Run 'npm run dev' to start the application"
     echo "2. Open http://localhost:3000 in your browser"
     echo "3. Register a new account or use test@example.com / password"
-    echo "4. Upload your MindNode files to create cards"
+    echo "4. Upload your files to create cards"
     echo ""
     echo "📚 For detailed information, see REPRODUCIBLE_SETUP.md"
     echo ""

@@ -1,4 +1,4 @@
-# 🚀 MindNode Card Creation App - Quick Reference
+# 🚀 Card Creation App - Quick Reference
 
 ## 📋 **Essential Commands**
 
@@ -118,7 +118,6 @@ npm run install-all
 - **Documents**: PDF, DOCX, TXT, MD, JSON
 - **Spreadsheets**: XLSX (Excel files)
 - **Images**: PNG, JPG, JPEG
-- **MindNode**: .mindnode files
 
 ## 🎯 **Typical Workflow**
 

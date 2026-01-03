@@ -1,8 +1,8 @@
-# 🚀 MindNode Card Creation App - Reproducible Setup Guide
+# 🚀 Card Creation App - Reproducible Setup Guide
 
 ## 📋 **Complete Configuration Documentation**
 
-This guide ensures you can reproduce the working MindNode card creation app consistently.
+This guide ensures you can reproduce the working card creation app consistently.
 
 ## 🛠 **System Requirements**
 
@@ -14,7 +14,7 @@ This guide ensures you can reproduce the working MindNode card creation app cons
 ## 📁 **Project Structure**
 
 ```
-MindNode/
+CardCreator/
 ├── client/                 # React frontend
 │   ├── src/
 │   │   ├── components/     # UI components
@@ -279,7 +279,6 @@ You'll know the setup is successful when:
 - All passwords are properly hashed with bcryptjs
 - JWT tokens are used for authentication
 - File uploads are stored in `server/uploads/`
-- The app is optimized for MindNode files and leadership content
 - All required files are included in the project - no manual file creation needed
 - **Enhanced Card Viewing**: Full-screen modal with scrollable content for long text
 - **No Overlapping Issues**: Fixed card viewing problems with improved modal structure

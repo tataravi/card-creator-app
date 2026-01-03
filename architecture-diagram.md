@@ -14,7 +14,7 @@
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    MINDNODE FRONTEND (React)                   │
+│                     FRONTEND (React)                   │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
 │  │   Redux Store   │  │   API Client    │  │   UI Components │ │
 │  │   (State Mgmt)  │  │   (HTTP Calls)  │  │   (Views)       │ │
@@ -23,7 +23,7 @@
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    MINDNODE BACKEND (Node.js)                  │
+│                     BACKEND (Node.js)                  │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
 │  │   Express API   │  │   MCP Client    │  │   Database      │ │
 │  │   Routes        │  │   (Evernote)    │  │   (MongoDB)     │ │
@@ -113,7 +113,7 @@
 
 ### 1. MCP Protocol Communication
 ```
-MindNode Backend ←→ MCP Server
+Backend ←→ MCP Server
 - Tool requests/responses
 - Error handling
 - Data transformation
@@ -129,7 +129,7 @@ MCP Server ←→ Evernote API
 
 ### 3. Database Operations
 ```
-MindNode Backend ←→ MongoDB
+ Backend ←→ MongoDB
 - Card creation
 - User management
 - Import tracking
@@ -139,7 +139,7 @@ MindNode Backend ←→ MongoDB
 
 ### Authentication Flow
 1. **Evernote OAuth**: User authenticates with Evernote
-2. **JWT Tokens**: MindNode app authentication
+2. **JWT Tokens**:  app authentication
 3. **API Keys**: Secure MCP server communication
 4. **Data Encryption**: Sensitive data protection
 
@@ -154,7 +154,7 @@ MindNode Backend ←→ MongoDB
 ### Development
 ```
 Local Machine:
-├── MindNode App (localhost:3000/5001)
+├── App (localhost:3000/5001)
 ├── MCP Server (stdio transport)
 └── MongoDB (Docker container)
 ```
@@ -162,7 +162,7 @@ Local Machine:
 ### Production
 ```
 Cloud Infrastructure:
-├── MindNode App (Web server)
+├── App (Web server)
 ├── MCP Server (Microservice)
 ├── MongoDB (Managed database)
 └── Load Balancer

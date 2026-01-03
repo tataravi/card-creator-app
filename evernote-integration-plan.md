@@ -1,7 +1,7 @@
-# Evernote Integration Plan for MindNode App
+# Evernote Integration Plan for  App
 
 ## Overview
-This document outlines how to integrate Evernote with the MindNode card creation app to import notes and create learning cards.
+This document outlines how to integrate Evernote with the  card creation app to import notes and create learning cards.
 
 ## Integration Options
 
