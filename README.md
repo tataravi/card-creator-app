@@ -1,6 +1,9 @@
 # Card Creation App
 
 A full-stack React and Node.js application that automatically creates interactive learning cards from uploaded content. Perfect for leadership, management, and educational content.
+<img width="477" height="458" alt="Screenshot 2026-03-24 at 6 29 42 AM" src="https://github.com/user-attachments/assets/febe8ed5-1a58-4fd2-a1b7-df478f07b72e" />
+
+
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
